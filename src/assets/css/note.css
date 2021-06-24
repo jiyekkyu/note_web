@@ -1,0 +1,82 @@
+body {
+	margin: 0;
+	background-color: gray;
+}
+
+section {
+	width: 708px;
+	padding: 0 30px;
+}
+
+.note-card {
+	width: 40%;
+	height: 80vh;
+	margin: 10vh auto;
+	background-color: white;
+	border-radius: 30px;
+	box-shadow: 0 15px 15px 15px #6f6f6f;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.title {
+	width: 708px;
+	padding: 50px 30px 30px 30px;
+}
+
+.main-title {
+	font-size: 40px;
+	font-weight: 500;
+}
+
+.no-data {
+	line-height: 450px;
+	text-align: center;
+}
+
+.back-btn {
+	border: none;
+	color: white;
+	background-color: gray;
+	border-radius: 10px;
+	width: 100px;
+	height: 30px;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.create-btn {
+	border: none;
+	color: white;
+	background-color: #8282ea;
+	border-radius: 10px;
+	width: 100px;
+	height: 30px;
+	font-size: 15px;
+	cursor: pointer;
+    float: right;
+}
+
+.btn {
+	width: 708px;
+	padding-top: 20px;
+}
+
+.title-input {
+	width: 100%;
+    height: 30px;
+    font-size: 18px;
+	margin: 20px 0;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+.note-input {
+	width: 100%;
+	height: 335px;
+    font-size: 18px;
+	border: 1px solid gray;
+	border-radius: 10px;
+	resize: none;
+	margin-bottom: 20px;
+}
