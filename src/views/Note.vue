@@ -7,46 +7,76 @@
 				<span>Take notes and never forget.</span>
 			</div>
 			<section v-if="url === 'home'">
-				<div v-if="!isNotes" class="no-data">No Data.</div>
-				<div v-else>
-					<note-items></note-items>
+				<div>
+					<noteItem
+						v-for="item in items"
+						:key="item.title"
+						:title="item.title"
+						:content="item.content"></noteItem>
 				</div>
-				<div class="btn">
-					<button class="create-btn" @click="pageMove('create')">Create Note</button>
-				</div>
+				<button class="new-note-item" @click="pageMove" value="create">+ New Note</button>
 			</section>
 			<section v-if="url === 'create'">
-				<button class="back-btn" @click="pageMove('home')">Back</button>
-				<input type="text" class="title-input">
-				<textarea class="note-input"></textarea>
-				<button class="create-btn">Done</button>
+				<button class="back-btn" @click="pageMove" value="home">Back</button>
+				<input type="text" class="title-input" v-model="title">
+				<textarea class="note-input" v-model="content"></textarea>
+				<button class="create-btn" @click="setItem">Done</button>
 			</section>
 		</div>
 	</div>
 </template>
 
 <script>
-import noteItem from '@/components/note_items'
+import noteItem from '@/components/note_items.vue';
 export default {
 	name: "Note",
 	components: {
-		'note-items': noteItem,
+		noteItem,
 	},
 	data() {
 		return {
 			url: 'home',
-			isNotes: false,
+			title: '',
+			content: '',
+			items: [],
 		}
 	},
 	methods: {
-		pageMove(url) {
+		pageMove(e) {
+			const url = e.target.value;
+
 			this.url = url;
+			this.title = '';
+			this.content = '';
 		},
 		getItem() {
-			const note = localStorage.getItem("note");
-
-			this.isNotes = note === null ? false : true;
+			const note = JSON.parse(localStorage.getItem("note"));
+			this.items = note === null ? [] : note;
 		},
+		scrollEvt(e) {
+			console.log(e)
+		},
+		setItem() {
+			const title = this.title;
+			const content = this.content;
+			const obj = {title, content};
+
+			if (title === '' ) {
+				alert('제목을 입력해주세요.');
+				return;
+			}
+
+			if (content === '' ) {
+				alert('내용을 입력해주세요.');
+				return;
+			}
+
+			this.items.push(obj);
+			localStorage.note = JSON.stringify(this.items);
+
+			this.url = 'home';
+			this.getItem();
+		}
 	},
 	created() {
 		this.getItem();
