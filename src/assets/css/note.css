@@ -14,6 +14,7 @@ section {
 
 p {
 	margin: 10px 0;
+	color: gray;
 }
 
 h1 {
@@ -57,7 +58,7 @@ h1 {
 	cursor: pointer;
 }
 
-.create-btn {
+.done-btn {
 	border: none;
 	color: white;
 	background-color: #8282ea;
@@ -67,6 +68,17 @@ h1 {
 	font-size: 15px;
 	cursor: pointer;
     float: right;
+}
+
+.del-btn {
+	border: none;
+	color: white;
+	background-color: #f56363;
+	border-radius: 10px;
+	width: 100px;
+	height: 30px;
+	font-size: 15px;
+	cursor: pointer;
 }
 
 .btn {
@@ -93,6 +105,11 @@ h1 {
 }
 
 .note-item {
+	height: 400px;
+    overflow: auto;
+}
+
+.note-item div {
 	border: 1px solid #8080804d;
     border-radius: 15px;
 	padding: 0 20px;
@@ -100,7 +117,7 @@ h1 {
 	cursor: pointer;
 }
 
-.note-item:hover {
+.note-item div:hover {
 	background-color: #00000012;
 }
 
@@ -119,6 +136,22 @@ h1 {
 
 .new-note-item:hover {
 	background-color: #00000012;
+}
+
+.note-item::-webkit-scrollbar {
+	width: 13px;
+}
+
+.note-item::-webkit-scrollbar-thumb {
+	background-color: #bdbdbdbf;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.note-item::-webkit-scrollbar-track {
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
 }
 
 @media screen and (max-width: 768px) {

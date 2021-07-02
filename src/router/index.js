@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Note from "../views/Note.vue";
+import CreateNote from "../views/CreateNote.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/note",
     name: "Note",
     component: Note,
+  },
+  {
+    path: "/createNote",
+    name: "CreateNote",
+    component: CreateNote,
   },
 ];
 

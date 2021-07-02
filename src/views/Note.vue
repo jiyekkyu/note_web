@@ -1,29 +1,17 @@
 <template>
-	<div class="note">
-		<div class="note-card">
-			<div class="title">
-				<span class="main-title">Notes App</span>
-				<br>
-				<span>Take notes and never forget.</span>
-			</div>
-			<section v-if="url === 'home'">
-				<div>
-					<noteItem
-						v-for="item in items"
-						:key="item.title"
-						:title="item.title"
-						:content="item.content"></noteItem>
-				</div>
-				<button class="new-note-item" @click="pageMove" value="create">+ New Note</button>
-			</section>
-			<section v-if="url === 'create'">
-				<button class="back-btn" @click="pageMove" value="home">Back</button>
-				<input type="text" class="title-input" v-model="title">
-				<textarea class="note-input" v-model="content"></textarea>
-				<button class="create-btn" @click="setItem">Done</button>
-			</section>
+	<section>
+		<button class="new-note-item" @click="createNote">+ New Note</button>
+		<div class="note-item" @scroll="scrollEvent">
+			<noteItem
+				v-for="(note, idx) in notes"
+				:key="idx"
+				:items="items"
+				:title="note.title"
+				:content="note.content"
+				:uptime="getUptime(note.uptime)"
+				@click="updateNote(idx)"></noteItem>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script>
@@ -38,48 +26,68 @@ export default {
 			url: 'home',
 			title: '',
 			content: '',
-			items: [],
+			uptime: '',
+			notes: [],
+			items: 4,
 		}
 	},
 	methods: {
-		pageMove(e) {
-			const url = e.target.value;
-
-			this.url = url;
-			this.title = '';
-			this.content = '';
+		createNote() {
+			this.$router.push('createNote');
 		},
-		getItem() {
+		updateNote(idx) {
+			const note = this.notes[idx];
+
+			this.$router.push({
+				name: 'CreateNote',
+				params: {
+					title: note.title,
+					content: note.content
+				},
+				query: {idx: idx}
+			});
+		},
+		getUptime(t) {
+			let time = new Date().getTime();
+			let rtnVal = '';
+
+			if (t) {
+				let min = 0;
+				let hour = 0;
+				let day = 0;
+
+				t = time - t;
+				t = Math.floor(t / 1000) / 60;
+
+				min = Math.floor(t % 60);
+				hour = Math.floor(t / 60);
+				day = Math.floor(hour / 24);
+
+				if (hour > 0) {
+					rtnVal =  hour + ' hours ' + min + ' minutes';
+					if (day > 0) {
+						rtnVal = day + ' days';
+					}
+				} else {
+					if (min > 0) {
+						rtnVal = min + ' minutes';
+					} else {
+						rtnVal = 'a few seconds';
+					}
+				}
+			} else{
+				return;
+			}
+			return rtnVal;
+		},
+		getNote() {
 			const note = JSON.parse(localStorage.getItem("note"));
-			this.items = note === null ? [] : note;
+
+			this.notes = note === null ? [] : note;
 		},
-		scrollEvt(e) {
-			console.log(e)
-		},
-		setItem() {
-			const title = this.title;
-			const content = this.content;
-			const obj = {title, content};
-
-			if (title === '' ) {
-				alert('제목을 입력해주세요.');
-				return;
-			}
-
-			if (content === '' ) {
-				alert('내용을 입력해주세요.');
-				return;
-			}
-
-			this.items.push(obj);
-			localStorage.note = JSON.stringify(this.items);
-
-			this.url = 'home';
-			this.getItem();
-		}
 	},
 	created() {
-		this.getItem();
+		this.getNote();
 	}
 };
 </script>
