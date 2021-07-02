@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<button class="back-btn" @click="pageMove('note')">Back</button>
+		<button class="back-btn" @click="pageMove">Back</button>
 		<input type="text" class="title-input" v-model="title">
 		<textarea class="note-input" v-model="content"></textarea>
 		<button class="done-btn" @click="setNote">Done</button>
@@ -21,8 +21,8 @@ export default {
 		}
 	},
 	methods: {
-		pageMove(url) {
-			this.$router.push(url);
+		pageMove() {
+			this.$router.push('/');
 		},
 		getNote() {
 			const note = JSON.parse(localStorage.getItem("note"));
@@ -60,7 +60,7 @@ export default {
 
 			localStorage.note = JSON.stringify(this.items);
 
-			this.pageMove('note');
+			this.pageMove();
 		},
 		delNote() {
 			const title = this.title;
@@ -69,7 +69,7 @@ export default {
 
 			this.items.splice(idx, 1);
 			localStorage.note = JSON.stringify(this.items);
-			this.pageMove('note');
+			this.pageMove();
 		}
 	},
 	created() {

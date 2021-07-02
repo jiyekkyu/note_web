@@ -4,7 +4,7 @@ import CreateNote from "../views/CreateNote.vue";
 
 const routes = [
   {
-    path: "/note",
+    path: "/",
     name: "Note",
     component: Note,
   },
