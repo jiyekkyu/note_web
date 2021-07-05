@@ -83,7 +83,7 @@ export default {
 		getNote() {
 			const note = JSON.parse(localStorage.getItem("note"));
 
-			this.notes = note === null ? [] : note;
+			this.notes = note ?? [];
 		},
 	},
 	created() {
